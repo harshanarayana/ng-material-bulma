@@ -1,0 +1,29 @@
+<header>
+  <mat-toolbar color="primary" class="shadow-header">
+    <span>{{title}}</span>
+    <button aria-haspopup="true" mat-button="" class="mat-button" *ngIf="auth.isAuthenticated()">
+      <a class="mat-button-wrapper" href="/" style="color: white"> Home
+      </a>
+      <div class="mat-button-ripple mat-ripple" matripple=""></div>
+      <div class="mat-button-focus-overlay"></div>
+    </button>
+    <span class="move-to-right"></span>
+    <span>
+      <button aria-haspopup="true" mat-button="" class="mat-button" *ngIf="auth.isAuthenticated()">
+        <a class="mat-button-wrapper" href="/profile" style="color: white"> Profile
+        </a>
+        <div class="mat-button-ripple mat-ripple" matripple=""></div>
+        <div class="mat-button-focus-overlay"></div>
+      </button>
+
+      <button aria-haspopup="true" mat-button="" class="mat-button">
+        <span class="mat-button-wrapper" *ngIf="!auth.isAuthenticated()" (click)="auth.login()"> Login
+        </span>
+        <span class="mat-button-wrapper" *ngIf="auth.isAuthenticated()" (click)="auth.logout()"> Logout
+        </span>
+        <div class="mat-button-ripple mat-ripple" matripple=""></div>
+        <div class="mat-button-focus-overlay"></div>
+      </button>
+    </span>
+  </mat-toolbar>
+</header>

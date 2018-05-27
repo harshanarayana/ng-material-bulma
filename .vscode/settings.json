@@ -1,0 +1,8 @@
+{
+  "prettier.singleQuote": true,
+  "javascript.preferences.quoteStyle": "single",
+  "autoimport.doubleQuotes": false,
+  "typescript.preferences.quoteStyle": "single",
+  "typescriptHero.imports.insertSemicolons": false,
+  "cSpell.language": "en,en-GB,en-US"
+}

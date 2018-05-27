@@ -1,0 +1,28 @@
+<div *ngIf="auth.isAuthenticated()">
+  <br/>
+  <br/>
+  <br/>
+  <mat-toolbar color="secondary" class="shadow-header">
+    <mat-toolbar-row>
+      <span>User Profile Details</span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <p-table [value]="userProfiles">
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngFor="let header of tableHeaders">
+          {{header.header}}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-userProfile>
+      <tr>
+        <td *ngFor="let header of tableHeaders">
+          <img *ngIf="checkIfImageColumn(header)" src={{userProfile[header.field]}}/>
+          <span *ngIf="!checkIfImageColumn(header)">{{userProfile[header.field]}}</span>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+<app-timeseries></app-timeseries>

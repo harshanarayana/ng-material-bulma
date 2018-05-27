@@ -1,0 +1,24 @@
+<div *ngIf="isAuthenticated()">
+  <br/>
+  <br/>
+  <br/>
+  <mat-toolbar color="secondary" class="shadow-header">
+    <mat-toolbar-row>
+      <span>Indian Cities - Weather Data</span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <div class="ui-g">
+    <div class="ui-g-4">
+      <p-dropdown [options]="citiesDropDown" placeholder="Select a City" [(ngModel)]="selectedCity" #city="ngModel" (onChange)="loadLocations()"></p-dropdown>
+    </div>
+    <div class="ui-g-4">
+      <p-dropdown [options]="locationDropdown" placeholder="Select a Location" [(ngModel)]="selectedLocation" #param="ngModel"
+        (onChange)="getChartDataForLocation(chart)"></p-dropdown>
+    </div>
+    <div class="ui-g-4">
+      <p-dropdown [options]="parameterDropdown" placeholder="Select a Parameter" [(ngModel)]="selectedParameter" #param="ngModel"
+        (onChange)="getChartDataForLocation(chart)"></p-dropdown>
+    </div>
+  </div>
+  <p-chart #chart type="line" [data]="chartData" *ngIf="chartVisibility"></p-chart>
+</div>
