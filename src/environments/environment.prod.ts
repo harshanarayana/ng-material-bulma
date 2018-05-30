@@ -2,7 +2,7 @@ import { EnvironmentVariables } from '../app/types/environment.variables';
 
 export const environment: EnvironmentVariables = {
   production: false,
-  authRedirectURL: 'http://localhost:3000/callback',
+  authRedirectURL: 'https://tranquil-refuge-82737.herokuapp.com/callback',
   authClientId: 'FSEGUYE7VH5ocGW9oVCrmobvR6XlIYUV',
   authDomain: 'harshanarayana.auth0.com',
   authResponseType: 'token id_token',
