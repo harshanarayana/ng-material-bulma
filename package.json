@@ -10,7 +10,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "debug": "ng build --watch && ng serve --watch --build-optimizer=false",
-    "postinstall": "ng build --aot --prod",
+    "postinstall": "ng build",
     "deploy:heroku": "git push heroku master"
   },
   "private": true,
