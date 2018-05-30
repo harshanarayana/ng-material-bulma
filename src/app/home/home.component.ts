@@ -44,6 +44,7 @@ export class HomeComponent implements OnInit {
         type: 'image'
       }
     ];
+    console.log(this.auth.isAuthenticated());
   }
 
   public checkIfImageColumn(column: ProfileTableMap): boolean {

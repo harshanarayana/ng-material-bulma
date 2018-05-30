@@ -9,7 +9,7 @@ import { AuthGuardService } from './services/auth/guard/auth.guard.service';
 const routes: Routes = [
   {
     path: '',
-    component: AppComponent
+    component: HomeComponent
   },
   {
     path: 'home',
@@ -18,8 +18,7 @@ const routes: Routes = [
   },
   {
     path: 'callback',
-    component: CallbackComponent,
-    canActivate: [AuthGuardService]
+    component: CallbackComponent
   },
   {
     path: 'profile',
