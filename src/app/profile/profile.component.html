@@ -1,21 +1,107 @@
-<div class="ui-g">
-  <div class="ui-g-4"></div>
-  <div class="ui-g-4">
-    <div class="profile-container">
-      <mat-form-field>
-        <input matInput placeholder="Input">
-      </mat-form-field>
-
-      <mat-form-field>
-        <textarea matInput placeholder="Textarea"></textarea>
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-select placeholder="Select">
-          <mat-option value="option">Option</mat-option>
-        </mat-select>
-      </mat-form-field>
+<section class="profile-setting columns" *ngIf="isAuthenticated()">
+  <div class="column profile-setting__left">
+    <div class="tile is-parent">
+      <article class="tile is-child notification is-primary">
+        <p class="title">Welcome</p>
+        <p class="subtitle">{{user.name}}</p>
+        <figure class="image is-4by3">
+          <img src="{{user.picture}}">
+        </figure>
+      </article>
     </div>
   </div>
-  <div class="ui-g-4"></div>
-</div>
+  <div class="column profile-setting__right">
+    <form [formGroup]="profileForm">
+      <div class="field">
+        <label class="label">Name</label>
+        <div class="control">
+          <input class="input form-control" type="text" placeholder="Text input" value="{{user.name}}" [attr.disabled]="profileExists ? '' : null"
+            formControlName="name" (focus)="markAsVisited()" (change)="markAsVisited()" (blur)="markAsVisited()">
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Email</label>
+        <div class="control">
+          <input class="input" type="email" placeholder="Email input" value="{{user.nickname}}@gmail.com" [attr.disabled]="profileExists ? '' : null"
+            formControlName="email" (focus)="markAsVisited()" (change)="markAsVisited()" (blur)="markAsVisited()">
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Designation</label>
+        <div class="select">
+          <select formControlName="designation" (focus)="markAsVisited()" (change)="markAsVisited()" (blur)="markAsVisited()" [attr.disabled]="profileExists ? '' : null">
+            <option *ngFor="let designation of designations" [value]="designation.value" [selected]="checkIfDesignationMatches(designation.value)">{{designation.viewValue}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Team Name</label>
+        <div class="control">
+          <input class="input" type="text" placeholder="Team Name" value="{{teamName}}" formControlName="teamName" (focus)="markAsVisited()"
+            (change)="markAsVisited()" (blur)="markAsVisited()" [attr.disabled]="profileExists ? '' : null">
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Organization</label>
+        <div class="control">
+          <input class="input" type="text" placeholder="Organization" value="{{orgName}}" formControlName="organization" (focus)="markAsVisited()"
+            (change)="markAsVisited()" (blur)="markAsVisited()" [attr.disabled]="profileExists ? '' : null">
+        </div>
+      </div>
+
+      <div class="select is-multiple">
+        <label class="label">Skills</label>
+        <div class="columns">
+          <div class="column">
+            <label class="label">React</label>
+            <ngb-rating [(rate)]="reactScore" (rateChange)="markAsVisited()"></ngb-rating>
+            <hr>
+            <pre>Rating: <b>{{reactScore}}</b></pre>
+          </div>
+          <div class="column">
+            <label class="label">Angular</label>
+            <ngb-rating [(rate)]="angularScore" (rateChange)="markAsVisited()"></ngb-rating>
+            <hr>
+            <pre>Rating: <b>{{angularScore}}</b></pre>
+          </div>
+          <div class="column">
+            <label class="label">NodeJS</label>
+            <ngb-rating [(rate)]="nodeJSScore" (rateChange)="markAsVisited()"></ngb-rating>
+            <hr>
+            <pre>Rating: <b>{{nodeJSScore}}</b></pre>
+          </div>
+          <div class="column">
+            <label class="label">Java</label>
+            <ngb-rating [(rate)]="javaScore" (rateChange)="markAsVisited()"></ngb-rating>
+            <hr>
+            <pre>Rating: <b>{{javaScore}}</b></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="field"></div>
+      <div class="field"></div>
+
+      <div class="field">
+        <div class="field-label">
+        </div>
+        <div class="field-label">
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <button class="button is-primary" [disabled]="!profileForm.valid" (click)="saveProfile()" *ngIf="!profileExists">
+                Save Profile Details
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</section>

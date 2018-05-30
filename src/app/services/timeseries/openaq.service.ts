@@ -17,6 +17,13 @@ export class OpenaqService {
 
   constructor(private _auth: AuthService, private _http: HttpClient) {}
 
+  /**
+   * Fetch a set of possible measurement units from the API that can be used to
+   * populate the initial Dropdown for the measurement selector.
+   *
+   * @returns {Observable<Parameters>} Observable to subscribe to.
+   * @memberof OpenaqService API Service Provider
+   */
   public getMeasurementParameters(): Observable<Parameters> {
     if (this._auth.isAuthenticated()) {
       return this._http.get<Parameters>(this.API_BASE_URL + '/parameters');

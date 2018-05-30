@@ -1,8 +1,10 @@
+import { JwtModule } from '@auth0/angular-jwt';
+import { OpenaqService } from './services/timeseries/openaq.service';
 import { AuthService } from './services/auth/auth.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,10 +21,18 @@ import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 
 import { MatSelectModule } from '@angular/material/select';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ChartModule } from 'primeng/chart';
 import { MatInputModule } from '@angular/material/input';
+import { MatChipsModule } from '@angular/material/chips';
+import { TagInputModule } from 'ngx-chips';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HeaderInterceptor } from './utils/interceptor/header.interceptor';
+
+export function tokenGetter() {
+  return localStorage.getItem('id_token');
+}
 
 @NgModule({
   declarations: [
@@ -47,9 +57,22 @@ import { MatInputModule } from '@angular/material/input';
     DropdownModule,
     ChartModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatChipsModule,
+    TagInputModule,
+    ReactiveFormsModule,
+    NgbModule.forRoot(),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter
+      }
+    })
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    OpenaqService,
+    { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

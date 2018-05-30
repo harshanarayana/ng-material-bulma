@@ -7,7 +7,7 @@ import { AuthService } from './services/auth/auth.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'NTS - Interview - Demo Application';
+  title = 'STUFF';
   constructor(public auth: AuthService) {
     auth.handleAuthentication();
   }

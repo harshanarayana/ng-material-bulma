@@ -1,8 +1,10 @@
-import { ParameterDropdown } from './../types/ui/parameter.dropdown';
 import {
-  ChartColorData,
-  ChartColorMap
+  ChartColorMap,
+  ChartColorData
 } from './../types/timeseries/chart.color.data';
+import { ChartColors } from './../data/chart.static.map';
+
+import { ParameterDropdown } from './../types/ui/parameter.dropdown';
 import { LocationDropdown } from './../types/ui/location.dropdown';
 import { AuthService } from './../services/auth/auth.service';
 import { CityDropdown } from './../types/ui/city.dropdown';
@@ -29,73 +31,37 @@ export class TimeseriesComponent implements OnInit {
     datasets: new Array<DataSet>()
   };
 
-  chartColorData: ChartColorMap<ChartColorData>;
+  chartColorData: ChartColorMap<ChartColorData> = ChartColors.TimeSeries;
 
   selectedCity: string;
   selectedLocation: string;
   selectedParameter: string;
   chartVisibility = false;
 
-  constructor(private _openAQ: OpenaqService, private _auth: AuthService) {}
+  constructor(private _openAQ: OpenaqService, private _auth: AuthService) {
+    console.log('here');
+  }
 
   ngOnInit() {
-    this._openAQ.getCitiesInIndia().subscribe(cities => {
-      cities.results.map(city => {
-        this.citiesDropDown.push({
-          label: city.city,
-          value: city.city
+    if (this._auth.isAuthenticated()) {
+      this._openAQ.getCitiesInIndia().subscribe(cities => {
+        cities.results.map(city => {
+          this.citiesDropDown.push({
+            label: city.city,
+            value: city.city
+          });
         });
       });
-    });
 
-    this._openAQ.getMeasurementParameters().subscribe(parameters => {
-      parameters.results.map(parameter => {
-        this.parameterDropdown.push({
-          label: parameter.name,
-          value: parameter.id
+      this._openAQ.getMeasurementParameters().subscribe(parameters => {
+        parameters.results.map(parameter => {
+          this.parameterDropdown.push({
+            label: parameter.name,
+            value: parameter.id
+          });
         });
       });
-    });
-
-    this.chartColorData = {
-      bc: {
-        color: '#64b5f6',
-        id: 'bc',
-        name: 'Black Carbon',
-        preferredUnit: 'µg/m³'
-      },
-      co: {
-        color: '#ba68c8',
-        id: 'co',
-        name: 'Carbon Monoxide',
-        preferredUnit: 'ppm'
-      },
-      n02: {
-        color: '#4db6ac',
-        id: 'no2',
-        name: 'Nitrogen Dioxide',
-        preferredUnit: 'ppm'
-      },
-      o3: { color: '#4db6ac', id: '03', name: 'Ozone', preferredUnit: 'ppm' },
-      pm10: {
-        color: '#f50057',
-        id: 'pm10',
-        name: 'Particulate < 10 micrometers',
-        preferredUnit: 'µg/m³'
-      },
-      pm25: {
-        color: '#ffe082',
-        id: 'pm25',
-        name: 'Particulate < 25 micrometers',
-        preferredUnit: 'µg/m³'
-      },
-      so2: {
-        color: '#8d6e63',
-        id: 'so2',
-        name: 'Sulfur Dioxide',
-        preferredUnit: 'ppm'
-      }
-    };
+    }
   }
 
   public loadLocations() {
@@ -117,6 +83,14 @@ export class TimeseriesComponent implements OnInit {
     }
   }
 
+  /**
+   * Fetch the Timeseries Chart data using {@link OpenaqService} methods and
+   * generate it in a format that is compatible to be used with the charting
+   * tool being used with this application.
+   *
+   * @param {UIChart} chart Chart Component to Refresh for Dynamic Chart refresh.
+   * @memberof TimeseriesComponent
+   */
   public getChartDataForLocation(chart: UIChart) {
     if (this._auth.isAuthenticated()) {
       this.chartData = {
@@ -127,6 +101,8 @@ export class TimeseriesComponent implements OnInit {
         .getAllMeasurementsForSelectedCity(this.selectedCity)
         .subscribe(measurements => {
           const map: Object = {};
+          // Filter Data for the Selected location and Selected parameters.
+          // This will reduce the data points to be rendered in the chart.
           measurements.results
             .filter(
               measurement => measurement.location === this.selectedLocation

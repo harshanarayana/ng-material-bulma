@@ -1,21 +1,30 @@
+import { AppComponent } from './app.component';
 import { ProfileComponent } from './profile/profile.component';
 import { CallbackComponent } from './callback/callback.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { AuthGuardService } from './services/auth/guard/auth.guard.service';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
+    component: AppComponent
+  },
+  {
+    path: 'home',
+    component: HomeComponent,
+    canActivate: [AuthGuardService]
   },
   {
     path: 'callback',
-    component: CallbackComponent
+    component: CallbackComponent,
+    canActivate: [AuthGuardService]
   },
   {
     path: 'profile',
-    component: ProfileComponent
+    component: ProfileComponent,
+    canActivate: [AuthGuardService]
   },
   {
     path: '**',

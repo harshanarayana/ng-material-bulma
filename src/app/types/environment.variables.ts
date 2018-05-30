@@ -7,4 +7,5 @@ export interface EnvironmentVariables {
   authAudience: string;
   authScope: string;
   timeSeriesAPIBase?: string;
+  profileAPIBase?: string;
 }

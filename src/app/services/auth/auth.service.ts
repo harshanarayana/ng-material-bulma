@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import * as auth0 from 'auth0-js';
 import { AuthResult } from '../../types/auth.result';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class AuthService {
     scope: environment.authScope
   });
 
-  constructor(public router: Router) {}
+  constructor(public router: Router, private _jwtHelper: JwtHelperService) {}
 
   public login(): void {
     this.auth.authorize();
@@ -58,11 +59,17 @@ export class AuthService {
     localStorage.removeItem('profile');
   }
 
+  private jwtFastCheck(): boolean {
+    const token = localStorage.getItem('it_token');
+    return this._jwtHelper.isTokenExpired(token);
+  }
+
   public isAuthenticated(): boolean {
     const expiresAt = JSON.parse(localStorage.getItem('expires_at') || '{}');
-    if (new Date().getTime() > expiresAt) {
+
+    if (new Date().getTime() > expiresAt || !this.jwtFastCheck()) {
       this.cleanLocalStorageForUserInfo();
     }
-    return new Date().getTime() < expiresAt;
+    return new Date().getTime() < expiresAt && this.jwtFastCheck();
   }
 }
