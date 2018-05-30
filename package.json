@@ -8,7 +8,8 @@
     "test": "ng test --build-optimizer=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "debug": "ng build --watch && ng serve --watch"
+    "debug": "ng build --watch && ng serve --watch",
+    "postinstall": "ng build"
   },
   "private": true,
   "dependencies": {
