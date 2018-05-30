@@ -1,15 +1,8 @@
 const express = require('express');
 const http = require('http');
 const path = require('path');
-const fs = require('fs');
 
 const app = express();
-
-fs.readdir(path.join(__dirname, 'dist'), (err, files) => {
-  files.forEach(file => {
-    console.log('Path -----> ' + file);
-  });
-});
 
 const forceSSL = function() {
   return function(req, res, next) {
@@ -22,10 +15,10 @@ const forceSSL = function() {
 
 app.use(forceSSL());
 
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, 'dist', 'web-angular')));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '/dist/index.html'));
+  res.sendFile(path.join(__dirname, '/dist/web-angular/index.html'));
 });
 
 const port = process.env.PORT || 3000;
