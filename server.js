@@ -7,7 +7,7 @@ const app = express();
 
 fs.readdir(path.join(__dirname, 'dist'), (err, files) => {
   files.forEach(file => {
-    console.log(file);
+    console.log('Path -----> ' + file);
   });
 });
 
