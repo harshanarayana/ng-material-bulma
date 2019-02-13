@@ -36,7 +36,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
     "auth0-js": "^9.5.1",
-    "bootstrap": "^4.1.1",
+    "bootstrap": "^4.3.1",
     "bulma": "^0.7.1",
     "chart.js": "^2.7.2",
     "codelyzer": "~4.2.1",
