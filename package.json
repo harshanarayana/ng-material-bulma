@@ -27,7 +27,7 @@
     "@angular/http": "^6.0.3",
     "@angular/language-service": "^6.0.3",
     "@angular/material": "^6.1.0",
-    "@angular/platform-browser": "^6.0.3",
+    "@angular/platform-browser": "^7.2.6",
     "@angular/platform-browser-dynamic": "^6.0.3",
     "@angular/router": "^6.0.3",
     "@auth0/angular-jwt": "^2.0.0",
